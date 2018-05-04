@@ -11,6 +11,7 @@ installModule("windows")
 #const WM_NCPAINT 		0x085
 #const WM_KEYDOWN		0x100
 #const WM_KEYUP			0x101
+#const WM_CHAR			0x102
 #const WM_SYSKEYDOWN	0x104
 #const WM_SYSKEYUP 		0x105
 #const WM_MOUSEMOVE 	0x200

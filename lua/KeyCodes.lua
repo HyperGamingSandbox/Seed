@@ -4,6 +4,8 @@
 #const Key_Return	0x0D
 
 #const Key_F4		0x73
+-- `~
+#const Key_OEM_3	0xC0
 
 #const Key_W		0x57
 #const Key_S 		0x53

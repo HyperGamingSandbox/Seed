@@ -206,6 +206,20 @@ LuaEMethod(RenderObject, del) {
 
 	case LUA_TTABLE: {
 
+		lua_pushliteral(L, "onDelete");
+		lua_gettable(L, -2);
+
+		tp = lua_type(L, -1);
+		switch (tp) {
+		case LUA_TFUNCTION: {
+			lua_pushvalue(L, -2);
+			lua_call(L, 1, 0);
+		}
+		break;
+		default:
+			lua_pop(L, 1);
+		}
+
 		lua_pushliteral(L, "firstChild");
 		lua_gettable(L, -2);
 

@@ -233,6 +233,7 @@ LuaEMethod(DDDrawMachine, drawText) {
 LuaEMethod(DDDrawMachine, setOutput) {
 	CHECK_ARGCLASS(1, DDOutput, output);
 	_output = output;
+	_output->__checkSurfaces(); 
 	return 0;
 }
 

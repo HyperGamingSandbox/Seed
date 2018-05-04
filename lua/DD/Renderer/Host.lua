@@ -32,6 +32,7 @@ local singleton
 
 function RendererHost:initialize(dd, wnd, pump, queue, ro, mainQueue, renderInfoCollectorFile, optionFile)
 
+	dprint("RendererHost:initialize")
 	singleton = self
 	self.ro = ro
 	self.optionFile = optionFile
@@ -176,6 +177,7 @@ function RendererHost:enableWindowedMode()
 		self.wnd:addStyle(#WS_OVERLAPPEDWINDOW)
 		-- self.wnd:restorePlacement()
 
+		-- dprint("213")
 		local g = self.optionFile:getGroup("video")
 		self.wnd:setPlacement(g:get("windowX"), g:get("windowY"), g:get("windowWidth"), g:get("windowHeight"))
 
@@ -525,5 +527,19 @@ function RendererHost:setWindowPosition(x, y, w, h)
 	end
 end
 ]]
+
+function RendererHost.setupKeyInputObject(keyInputObject)
+	local self = singleton
+	self.keyInputObject = keyInputObject
+end
+
+function RendererHost.processKey(key, alt)
+	local self = singleton
+	dprint("RendererHost.processKey")
+	if self.keyInputObject ~= nil then
+		self.keyInputObject:processKey(key, alt)
+	end
+end
+
 
 return RendererHost

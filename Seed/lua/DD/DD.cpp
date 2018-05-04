@@ -120,7 +120,15 @@ const char *DDErrorString(HRESULT hr) {
 
 DD::DD(unsigned short int classId) : LuaBaseClass(classId), _dd(0) { }
 void DD::__init(lua_State *L) {
+
 	auto hr = DirectDrawCreateEx(NULL, (VOID**)&_dd, IID_IDirectDraw7, NULL);
+	// auto hr = DirectDrawCreate(NULL, (VOID**)&_dd, NULL);
+
+	/*
+	lua_pushstring(L, "asdqwe");
+	lua_error(L);
+	*/
+
 	if (FAILED(hr)) {
 		lua_pushstring(L, DDErrorString(hr));
 		lua_error(L);

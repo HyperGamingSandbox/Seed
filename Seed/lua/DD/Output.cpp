@@ -54,6 +54,12 @@ LuaEMethod(DDOutput, create) {
 		_width = rect.right - rect.left;
 		_height = rect.bottom - rect.top;
 
+		/*
+		char b[1024];
+		sprintf(b, "w %d h %d\n", _width, _height);
+		OutputDebugStringA(b);
+		*/
+
 		if (_height < 1 || _width < 1) {
 			return 0;
 		}
@@ -232,8 +238,13 @@ void DDOutput::__checkSurfaces() {
 		if (_dds_Primary && _dds_Primary->IsLost() == DDERR_SURFACELOST)
 			_dds_Primary->Restore();
 
+		if (_dds->IsLost() == DDERR_SURFACELOST) {
+			_dds->Restore();
+		}
+			/*
 		if (_dds_Back && _dds_Back[_backSurfaceIndex] && _dds_Back[_backSurfaceIndex]->IsLost() == DDERR_SURFACELOST)
 			_dds_Back[_backSurfaceIndex]->Restore();
+			*/
 	}
 	break;
 
@@ -273,7 +284,12 @@ LuaEMethod(DDOutput, flip) {
 
 		SetRect(&rcSrc, 0, 0, _width, _height);
 
-		auto hr = _dds_Primary->Blt(&rcDest, _dds_Back[_backSurfaceIndex], &rcSrc, DDBLT_WAIT, NULL);
+		//auto hr = _dds_Primary->Blt(&rcDest, _dds_Back[_backSurfaceIndex], &rcSrc, DDBLT_WAIT, NULL);
+		auto hr = _dds_Primary->Blt(&rcDest, _dds, &rcSrc, DDBLT_WAIT, NULL);
+		if (FAILED(hr)) {
+			lua_pushfstring(L, "Error DDOutput:flip %s", DDErrorString(hr));
+			lua_error(L);
+		}
 
 		_backSurfaceIndex++;
 		if (_backSurfaceIndex >= _backSurfaceCount) {

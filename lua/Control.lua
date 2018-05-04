@@ -32,8 +32,9 @@ installModule("rmap")
 #const ROF_LDOWN			(#ROEVENTS + 6)
 #const ROF_LUP				(#ROEVENTS + 7)
 #const ROF_LCLICK			(#ROEVENTS + 8)
+#const ROF_PROCESSKEY		(#ROEVENTS + 9)
 
-#const ROPROPS				(#ROEVENTS + 9)
+#const ROPROPS				(#ROEVENTS + 10)
 
 #const RRF_COLOR			(#ROPROPS + 0)
 
@@ -89,7 +90,8 @@ local eventMap = {
 	onParentChangePos 	= #ROF_ONPARENTCHANGEPOS,
 	onLDown				= #ROF_LDOWN,
 	onLUp				= #ROF_LUP,
-	onLClick			= #ROF_LCLICK
+	onLClick			= #ROF_LCLICK,
+	onProcessKey		= #ROF_PROCESSKEY
 
 }
 
@@ -177,6 +179,25 @@ end
 
 Control.elibs.innerPosition = InnerPosition
 
+local InnerBottomPosition = {
+	onAdd = function(self, parent)
+		local x, y, w, h = parent:get(#ROF_X, 4)
+		local bx, by = self:get(#ROF_BX, 2)
+		self:set(#ROF_X, x + bx, y + h - by)
+		self:set(#ROF_SKIPHOVER, false)
+
+		self:cevent(#ROF_ONPARENTCHANGEPOS, self)
+	end,
+	onParentChangePos = function(self, parent)
+		local x, y, w, h = parent:get(#ROF_X, 4)
+		local bx, by = self:get(#ROF_BX, 2)
+		self:set(#ROF_X, x + bx, y + h - by)
+
+		self:cevent(#ROF_ONPARENTCHANGEPOS, self)
+	end	
+}
+
+Control.elibs.innerBottomPosition = InnerBottomPosition
 
 
 local HoverHand = { }

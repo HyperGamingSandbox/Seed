@@ -13,7 +13,7 @@ void RBox::__init(lua_State *L) {
 	// check params	
 	if (c < 7) {
 		luaL_where(L, 1);
-		lua_pushfstring(L, "%RText need 7 arguments but have %d", lua_tostring(L, -1), getCount());
+		lua_pushfstring(L, "%RBox need 7 arguments but have %d", lua_tostring(L, -1), getCount());
 		lua_remove(L, -2);
 		lua_error(L);
 	}

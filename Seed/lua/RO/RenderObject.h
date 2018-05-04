@@ -32,8 +32,9 @@
 #define ROF_LDOWN			(ROEVENTS + 6)
 #define ROF_LUP				(ROEVENTS + 7)
 #define ROF_LCLICK			(ROEVENTS + 8)
+#define ROF_PROCESSKEY		(ROEVENTS + 9)
 
-#define ROPROPS				(ROEVENTS + 9)
+#define ROPROPS				(ROEVENTS + 10)
 
 // rrect
 
